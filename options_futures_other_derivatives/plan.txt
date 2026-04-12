@@ -51,11 +51,11 @@ hull/
 │   └── expected_shortfall.py        # Ch 18
 │
 ├── credit/
-│   ├── credit_risk.py               # Ch 20 - default prob, recovery rates
-│   ├── credit_default_swap.py       # Ch 21 - basic CDS pricer
+│   ├── credit_risk.py               # Ch 20
+│   ├── credit_default_swap.py       # Ch 21
 │   └── hazard_rates.py             # Ch 20
 │
 └── interest_rate_models/
-    ├── blacks_model.py              # Ch 26 - caps, floors, swaptions
+    ├── blacks_model.py              # Ch 26
     ├── vasicek.py                   # Ch 28
     └── cir.py                      # Ch 28
