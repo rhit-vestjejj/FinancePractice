@@ -1,0 +1,61 @@
+hull/
+├── futures/
+│   ├── forward_pricing.py           # Ch 5 - DONE
+│   ├── cost_of_carry.py             # Ch 5 - DONE
+│   └── interest_rate_futures.py     # Ch 6
+│
+├── hedging/
+│   ├── hedge_ratio.py               # Ch 3 - DONE
+│   ├── basis_risk.py                # Ch 3
+│   ├── cross_hedge.py               # Ch 3
+│   ├── stock_index_hedge.py         # Ch 3
+│   └── rolling_hedge.py            # Ch 3
+│
+├── interest_rates/
+│   ├── bond_pricing.py              # Ch 4
+│   ├── yield_curve.py               # Ch 4
+│   ├── duration_convexity.py        # Ch 4
+│   ├── forward_rates.py             # Ch 4
+│   └── interest_rate_futures.py     # Ch 6
+│
+├── swaps/
+│   ├── interest_rate_swap.py        # Ch 7
+│   └── currency_swap.py            # Ch 7
+│
+├── options/
+│   ├── payoff_diagrams.py           # Ch 10
+│   ├── black_scholes.py             # Ch 13
+│   ├── options_on_indices.py        # Ch 14
+│   ├── options_on_currencies.py     # Ch 14
+│   ├── options_on_futures.py        # Ch 14
+│   ├── greeks.py                    # Ch 15
+│   ├── put_call_parity.py           # Ch 9
+│   └── binomial_tree.py            # Ch 11
+│
+├── volatility/
+│   ├── implied_vol.py               # Ch 16
+│   ├── vol_surface.py               # Ch 16
+│   ├── garch.py                    # Ch 19
+│   └── ewma.py                     # Ch 19
+│
+├── simulation/
+│   ├── gbm.py                       # Ch 12
+│   ├── monte_carlo_options.py       # Ch 17
+│   ├── monte_carlo_var.py           # Ch 18
+│   ├── variance_reduction.py        # Ch 17
+│   └── finite_difference.py        # Ch 17
+│
+├── risk/
+│   ├── historical_var.py            # Ch 18
+│   ├── parametric_var.py            # Ch 18
+│   └── expected_shortfall.py        # Ch 18
+│
+├── credit/
+│   ├── credit_risk.py               # Ch 20 - default prob, recovery rates
+│   ├── credit_default_swap.py       # Ch 21 - basic CDS pricer
+│   └── hazard_rates.py             # Ch 20
+│
+└── interest_rate_models/
+    ├── blacks_model.py              # Ch 26 - caps, floors, swaptions
+    ├── vasicek.py                   # Ch 28
+    └── cir.py                      # Ch 28
