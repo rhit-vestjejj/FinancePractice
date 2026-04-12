@@ -2,12 +2,11 @@ hull/
 ├── futures/
 │   ├── forward_pricing.py           # Ch 5 - DONE
 │   ├── cost_of_carry.py             # Ch 5 - DONE
-│   └── interest_rate_futures.py     # Ch 6
 │
 ├── hedging/
 │   ├── hedge_ratio.py               # Ch 3 - DONE
-│   ├── basis_risk.py                # Ch 3
-│   ├── cross_hedge.py               # Ch 3
+│   ├── basis_risk.py                # Ch 3 - DONE
+│   ├── cross_hedge.py               # Ch 3 - DONE
 │   ├── stock_index_hedge.py         # Ch 3
 │   └── rolling_hedge.py            # Ch 3
 │
