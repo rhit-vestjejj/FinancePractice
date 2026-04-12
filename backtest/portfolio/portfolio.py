@@ -54,9 +54,11 @@ class Portfolio:
             if cost < self.cash:
                 self.positions[ticker] += event.quantity
                 self.cash -= (event.fill_price * event.quantity) + event.commission
-        elif event.direction == 'SELL':
-            self.positions[ticker] -= event.quantity
-            self.cash += (event.fill_price * event.quantity) - event.commission
+                
+        if event.direction == 'SELL':
+            current = self.positions.get(ticker, 0)
+            if event.quantity > current:
+                event = FillEvent(ticker, 'SELL', current, event.fill_price, event.commission)
     
     def get_position(self, ticker: str) -> int:
         return self.positions.get(ticker, 0)

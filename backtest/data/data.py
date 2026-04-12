@@ -24,7 +24,7 @@ class DataHandler:
     
     def _load_data(self):
         for ticker in self.tickers:
-            df = yf.download(ticker, start=self.start, end=self.end)
+            df = yf.download(ticker, start=self.start, end=self.end, progress=False)
             df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
             df.dropna(inplace=True)
             self.data[ticker] = df

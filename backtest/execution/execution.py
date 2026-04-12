@@ -21,44 +21,28 @@ class ExecutionHandler:
         self.volume_buffer = defaultdict(lambda: deque(maxlen=20))
         self.pending_orders: list[PendingOrder] = []
 
-    def execute_order(self, order: OrderEvent, bar: MarketEvent) -> FillEvent:
-        # fill at current bar's close price
-        # in reality you'd use next bar's open to avoid look-ahead
-        # we'll fix this later
-        fill_price = bar.close
-        commission = round(fill_price * order.quantity * self.commission_rate, 2)
-
-        if order.execution_algo == "MARKET":
-            return FillEvent(
+    def execute_order(self, order: OrderEvent, bar: MarketEvent) -> None:
+        self.pending_orders.append(
+            PendingOrder(
                 ticker=order.ticker,
                 direction=order.direction,
-                quantity=order.quantity,
-                fill_price=fill_price,
-                commission=commission
+                remaining_quantity=order.quantity,
+                total_quantity=order.quantity,
+                bars_remaining=1 if order.execution_algo == "MARKET" else order.execution_bars,
+                algo=order.execution_algo,
             )
+        )
         
-        if order.execution_algo in ("VWAP", "TWAP"):
-            self.pending_orders.append(
-                PendingOrder(
-                    ticker=order.ticker,
-                    direction=order.direction,
-                    remaining_quantity=order.quantity,
-                    total_quantity=order.quantity,
-                    bars_remaining=order.execution_bars,
-                    algo=order.execution_algo,
-                )
-            )
-
-            return None
-    
     def process_pending(self, bar: MarketEvent):
         pending: list[FillEvent] = []
-        fill_price = bar.close
+        fill_price = bar.open
 
         for pending_order in self.pending_orders:
             if pending_order.bars_remaining == 0:
                 continue
             
+
+
             if pending_order.algo == "TWAP":
                 slice = pending_order.remaining_quantity / pending_order.bars_remaining
                 commission = round(fill_price * slice * self.commission_rate, 2)
@@ -71,12 +55,15 @@ class ExecutionHandler:
                     commission=commission
                 ))
 
+                pending_order.remaining_quantity -= slice
+                pending_order.bars_remaining -= 1
+
             if pending_order.algo == "VWAP":
                 avg_volume = self.get_average_volume(pending_order.ticker)
                 current_volume = bar.volume
                 volume_weight = current_volume / avg_volume
                 raw_slice = (pending_order.remaining_quantity / pending_order.bars_remaining ) * volume_weight
-                slice = min(raw_slice, pending_order.remaining_quantity)
+                slice = int(min(raw_slice, pending_order.remaining_quantity))
                 commission = round(fill_price * slice * self.commission_rate, 2)
 
                 pending.append(FillEvent(
@@ -87,8 +74,10 @@ class ExecutionHandler:
                     commission=commission
                 ))
 
-            pending_order.remaining_quantity -= slice
-            pending_order.bars_remaining -= 1
+                pending_order.remaining_quantity -= slice
+                pending_order.bars_remaining -= 1
+
+
 
         self.pending_orders = [o for o in self.pending_orders if o.bars_remaining > 0]
 
