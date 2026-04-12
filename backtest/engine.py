@@ -24,7 +24,7 @@ class Engine:
         self.execution = ExecutionHandler()
         self.strategy = MovingAverageCrossover(tickers, 
                                                algo="VWAP", 
-                                               execution_bars=20, 
+                                               execution_bars=5, 
                                                short_window=short_window, 
                                                long_window=long_window, 
                                                stop_loss_pct=stop_loss_pct,
@@ -51,7 +51,7 @@ class Engine:
         
         # self.portfolio.summary()
         # print("---")
-        perf = Performance(self.portfolio.history)
+        perf = Performance(self.portfolio.history, self.portfolio.fill_history)
         self.shape = perf.sharpe_ratio()
         self.sharpe = perf.sharpe_ratio()
         # perf.report(self.data_handler, self.tickers[0])

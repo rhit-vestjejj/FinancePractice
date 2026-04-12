@@ -8,6 +8,7 @@ class OrderEvent:
     quantity: int
     execution_algo: str = 'MARKET'  
     execution_bars: int = 1
+    decision_price: float = 0.0
 
 @dataclass  
 class FillEvent:
@@ -16,6 +17,8 @@ class FillEvent:
     quantity: int
     fill_price: float
     commission: float
+    decision_price: float = 0.0
+
 
 class Portfolio:
     def __init__(self, initial_capital: float = 100000.0):
@@ -25,6 +28,7 @@ class Portfolio:
         self.holdings = {}       # ticker -> current market value
         self.total_value = initial_capital
         self.history = []        # track portfolio value over time
+        self.fill_history = []
     
     def update_market(self, event: MarketEvent):
         # update current market value of each position
@@ -54,11 +58,22 @@ class Portfolio:
             if cost < self.cash:
                 self.positions[ticker] += event.quantity
                 self.cash -= (event.fill_price * event.quantity) + event.commission
-                
+
         if event.direction == 'SELL':
             current = self.positions.get(ticker, 0)
-            if event.quantity > current:
-                event = FillEvent(ticker, 'SELL', current, event.fill_price, event.commission)
+            quantity = min(event.quantity, current)
+            if quantity > 0:
+                self.positions[ticker] -= quantity
+                self.cash += (event.fill_price * quantity) - event.commission
+        
+        self.fill_history.append({
+            'ticker': event.ticker,
+            'direction': event.direction,
+            'quantity': event.quantity,
+            'fill_price': event.fill_price,
+            'decision_price': event.decision_price,
+            'commission': event.commission
+        })
     
     def get_position(self, ticker: str) -> int:
         return self.positions.get(ticker, 0)

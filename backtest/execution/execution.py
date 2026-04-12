@@ -13,6 +13,7 @@ class PendingOrder:
     total_quantity: int
     bars_remaining: int
     algo: str
+    decision_price: float
 
 class ExecutionHandler:
     def __init__(self, commission_rate: float = 0.001):
@@ -30,6 +31,7 @@ class ExecutionHandler:
                 total_quantity=order.quantity,
                 bars_remaining=1 if order.execution_algo == "MARKET" else order.execution_bars,
                 algo=order.execution_algo,
+                decision_price=order.decision_price
             )
         )
         
@@ -40,8 +42,6 @@ class ExecutionHandler:
         for pending_order in self.pending_orders:
             if pending_order.bars_remaining == 0:
                 continue
-            
-
 
             if pending_order.algo == "TWAP":
                 slice = pending_order.remaining_quantity / pending_order.bars_remaining
@@ -52,7 +52,8 @@ class ExecutionHandler:
                     direction=pending_order.direction,
                     quantity=slice,
                     fill_price=fill_price,
-                    commission=commission
+                    commission=commission,
+                    decision_price=pending_order.decision_price
                 ))
 
                 pending_order.remaining_quantity -= slice
@@ -71,13 +72,12 @@ class ExecutionHandler:
                     direction=pending_order.direction,
                     quantity=slice,
                     fill_price=fill_price,
-                    commission=commission
+                    commission=commission,
+                    decision_price=pending_order.decision_price
                 ))
 
                 pending_order.remaining_quantity -= slice
                 pending_order.bars_remaining -= 1
-
-
 
         self.pending_orders = [o for o in self.pending_orders if o.bars_remaining > 0]
 

@@ -25,13 +25,14 @@ class BaseStrategy(ABC):
         # then delegate to the strategy's specific logic
         return self.generate_signal(event, portfolio_value)
 
-    def create_order(self, ticker: str, direction: str, quantity: int) -> OrderEvent:
+    def create_order(self, ticker: str, direction: str, quantity: int, decision_price: float) -> OrderEvent:
         return OrderEvent(
             ticker=ticker,
             direction=direction,
             quantity=quantity,
             execution_algo=self.algo,
-            execution_bars=self.execution_bars
+            execution_bars=self.execution_bars,
+            decision_price=decision_price
         )
     
     def check_stop_loss(self, event: MarketEvent) -> OrderEvent | None:
@@ -41,11 +42,12 @@ class BaseStrategy(ABC):
         
         loss = (event.close - self.entry_prices[ticker]) / self.entry_prices[ticker]
         if loss < -self.stop_loss_pct:
+            decision_price = self.entry_prices.get(ticker, 0.0)
             quantity = self.current_quantities.pop(ticker, 0)
             self.entry_prices.pop(ticker)
             self.on_stop_loss(ticker)
-            return self.create_order(ticker, 'SELL', quantity)
-        
+            return self.create_order(ticker, 'SELL', quantity, decision_price)
+                    
         return None
     
     # in base.py

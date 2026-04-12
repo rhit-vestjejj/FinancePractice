@@ -108,11 +108,12 @@ class WalkForward:
 
         engine.run()
 
-        perf = Performance(engine.portfolio.history)
+        perf = Performance(engine.portfolio.history, engine.portfolio.fill_history)
         sharpe = perf.sharpe_ratio()
         alpha = perf.total_return() - perf.buy_and_hold_return(engine.data_handler, engine.tickers[0])
+        is_bps = perf.implementation_shortfall()
 
-        return sharpe, alpha
+        return sharpe, alpha, is_bps
 
 
     def run(self):
@@ -122,18 +123,20 @@ class WalkForward:
         for i, (tr_start, tr_end, te_start, te_end) in enumerate(windows):
             print(f"\nWindow {i+1}: Train {tr_start} -> {tr_end} | Test {te_start} -> {te_end}")
             best_params = self.train(tr_start, tr_end)
-            sharpe, alpha = self.test(te_start, te_end, best_params)
-            results.append({'window': i+1, 'sharpe': sharpe, 'alpha': alpha})
-            print(f"Test Sharpe: {sharpe:.3f} | Alpha: {alpha:.2f}%")
+            sharpe, alpha, is_bps = self.test(te_start, te_end, best_params)
+            results.append({'window': i+1, 'sharpe': sharpe, 'alpha': alpha, 'is_bps': is_bps})
+            print(f"Test Sharpe: {sharpe:.3f} | Alpha: {alpha:.2f}% | IS: {is_bps:.2f} bps")
         
         print("\n=== WALK-FORWARD SUMMARY ===")
         sharpes = [r['sharpe'] for r in results]
         alphas = [r['alpha'] for r in results]
-        print(f"Avg Test Sharpe:     {sum(sharpes)/len(sharpes):.3f}")
-        print(f"Avg Test Alpha:      {sum(alphas)/len(alphas):.2f}%")
+        print(f"Avg Test Sharpe:        {sum(sharpes)/len(sharpes):.3f}")
+        print(f"Avg Test Alpha:         {sum(alphas)/len(alphas):.2f}%")
         print(f"Positive Alpha Windows: {sum(1 for a in alphas if a > 0)}/{len(results)}")
-        print(f"Best Window Alpha:   {max(alphas):.2f}%")
-        print(f"Worst Window Alpha:  {min(alphas):.2f}%")
+        print(f"Best Window Alpha:      {max(alphas):.2f}%")
+        print(f"Worst Window Alpha:     {min(alphas):.2f}%")
+        is_list = [r['is_bps'] for r in results]
+        print(f"Avg Impl Shortfall: {sum(is_list)/len(is_list):.2f} bps") 
 
 
 if __name__ == "__main__":

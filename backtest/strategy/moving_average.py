@@ -27,13 +27,13 @@ class MovingAverageCrossover(BaseStrategy):
             self.entry_prices[ticker] = event.close
             self.current_quantities[ticker] = quantity
             self.invested[ticker] = True
-            return self.create_order(ticker, 'BUY', quantity)
+            return self.create_order(ticker, 'BUY', quantity, event.close)
         
         elif short_ma < long_ma and self.invested[ticker]:
             self.entry_prices.pop(ticker, None)
             self.current_quantities.pop(ticker, None)
             self.invested[ticker] = False
-            return self.create_order(ticker, 'SELL', quantity)
+            return self.create_order(ticker, 'SELL', quantity, event.close)
         
         return None
     
