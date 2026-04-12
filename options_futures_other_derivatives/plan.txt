@@ -7,8 +7,8 @@ hull/
 │   ├── hedge_ratio.py               # Ch 3 - DONE
 │   ├── basis_risk.py                # Ch 3 - DONE
 │   ├── cross_hedge.py               # Ch 3 - DONE
-│   ├── stock_index_hedge.py         # Ch 3
-│   └── rolling_hedge.py            # Ch 3
+│   ├── stock_index_hedge.py         # Ch 3 - DONE
+│   └── rolling_hedge.py            # Ch 3 - DONE
 │
 ├── interest_rates/
 │   ├── bond_pricing.py              # Ch 4
