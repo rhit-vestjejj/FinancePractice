@@ -47,3 +47,4 @@ for m, r in spot_rates.items():
     print(f"  {m} year: {r:.4f}")
 
 print(f"\nInterpolated rate at 1.3 years: {interpolate_rate(spot_rates, 1.3):.4f}")
+
