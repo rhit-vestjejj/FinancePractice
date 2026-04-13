@@ -13,7 +13,7 @@ hull/
 ├── interest_rates/
 │   ├── bond_pricing.py              # Ch 4 - DONE
 │   ├── yield_curve.py               # Ch 4
-│   ├── duration_convexity.py        # Ch 4
+│   ├── duration_convexity.py        # Ch 4 - DONE
 │   ├── forward_rates.py             # Ch 4
 │   └── interest_rate_futures.py     # Ch 6
 │
