@@ -15,7 +15,7 @@ hull/
 │   ├── yield_curve.py               # Ch 4 - DONE
 │   ├── duration_convexity.py        # Ch 4 - DONE
 │   ├── forward_rates.py             # Ch 4 - DONE
-│   └── interest_rate_futures.py     # Ch 6
+│   └── interest_rate_futures.py     # Ch 6 - DONE
 │
 ├── swaps/
 │   ├── interest_rate_swap.py        # Ch 7
