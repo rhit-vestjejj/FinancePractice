@@ -22,7 +22,7 @@ hull/
 │   └── currency_swap.py            # Ch 7 - DONE
 │
 ├── options/
-│   ├── payoff_diagrams.py           # Ch 10
+│   ├── payoff_diagrams.py           # Ch 10 - DONE
 │   ├── black_scholes.py             # Ch 13
 │   ├── options_on_indices.py        # Ch 14
 │   ├── options_on_currencies.py     # Ch 14
