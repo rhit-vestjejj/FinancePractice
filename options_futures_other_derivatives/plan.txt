@@ -19,7 +19,7 @@ hull/
 │
 ├── swaps/
 │   ├── interest_rate_swap.py        # Ch 7 - DONE
-│   └── currency_swap.py            # Ch 7
+│   └── currency_swap.py            # Ch 7 - DONE
 │
 ├── options/
 │   ├── payoff_diagrams.py           # Ch 10
