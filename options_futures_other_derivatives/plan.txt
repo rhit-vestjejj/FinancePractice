@@ -29,7 +29,7 @@ hull/
 │   ├── options_on_futures.py        # Ch 14
 │   ├── greeks.py                    # Ch 15
 │   ├── put_call_parity.py           # Ch 9 - DONE
-│   └── binomial_tree.py            # Ch 11
+│   └── binomial_tree.py            # Ch 11 - DONE
 │
 ├── volatility/
 │   ├── implied_vol.py               # Ch 16
