@@ -24,7 +24,7 @@ hull/
 ├── options/
 │   ├── payoff_diagrams.py           # Ch 10 - DONE
 │   ├── black_scholes.py             # Ch 13 - DONE
-│   ├── options_on_indices.py        # Ch 14
+│   ├── options_on_indices.py        # Ch 14 - DONE
 │   ├── options_on_currencies.py     # Ch 14
 │   ├── options_on_futures.py        # Ch 14
 │   ├── greeks.py                    # Ch 15
