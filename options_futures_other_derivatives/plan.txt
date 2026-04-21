@@ -32,8 +32,8 @@ hull/
 │   └── binomial_tree.py            # Ch 11 - DONE
 │
 ├── volatility/
-│   ├── implied_vol.py               # Ch 16
-│   ├── vol_surface.py               # Ch 16
+│   ├── implied_vol.py               # Ch 16 - DONE
+│   ├── vol_surface.py               # Ch 16 - DONE
 │   ├── garch.py                    # Ch 19
 │   └── ewma.py                     # Ch 19
 │
